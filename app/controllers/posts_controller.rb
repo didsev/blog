@@ -19,18 +19,20 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
     flash[:error] = nil
+    @users = User.all
   end
 
   def create
     @post = Post.new(post_params)
+    @post.user_id = params[:users]
 
-    if @post.save
+  if @post.save
       redirect_to root_path
       flash[:error] = nil
     else
       flash[:error] = 'Error while saving'
       render action: 'new', object: @post
-    end
+   end
   end
 
   def destroy
