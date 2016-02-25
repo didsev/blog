@@ -1,5 +1,11 @@
-<% @user.posts.each do |post| %>
-<%= post.title %>
+ <%= @user.full_name %>
 <hr>
-<% end %>
+  Lists of posts: <br>
 
+<% i = 1%>
+
+<% @user.posts.each do |post| %>
+  Post <%= i %>   <%= link_to post.title, post_path(post) %><br>
+  <% i += 1%>
+<% end %>
+<hr>

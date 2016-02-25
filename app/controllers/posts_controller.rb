@@ -5,7 +5,9 @@ class PostsController < ApplicationController
     @posts = Post.all
   end
 
-  def show
+  def show 
+    @users_ids = PostsUser.where(post_id: params[:id]).pluck(:id)
+    @users = User.where(id: @users_ids)
   end
 
   def edit
@@ -13,26 +15,28 @@ class PostsController < ApplicationController
 
   def update
     @post.update(post_params)
-    redirect_to post_path(@post.id)
+    redirect_to post_path(@post)
   end
 
   def new
     @post = Post.new
     flash[:error] = nil
-    @users = User.all
   end
 
   def create
     @post = Post.new(post_params)
-    @post.user_id = params[:users]
 
-  if @post.save
-      redirect_to root_path
-      flash[:error] = nil
+    if @post.save
+      params[:users].each do |user_id|
+        PostsUser.create(user: User.find(user_id), post: @post)
+      end
+
+        flash[:error] = nil
+        redirect_to root_path
     else
-      flash[:error] = 'Error while saving'
-      render action: 'new', object: @post
-   end
+        flash[:error] = 'Error while saving'
+        render action: 'new', object: @post
+    end
   end
 
   def destroy

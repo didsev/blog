@@ -1,6 +1,12 @@
 Title: <%= @post.title %> <br>
-Text: <%= @post.text %><br><br>
-<br>
+Text: <%= @post.text %><br>
+
 <hr>
-	Created by: <%=User.where(id: @post.user_id).first.try(:full_name)%>
+  Created by: <br>
+
+<% @post.users.each do |user| %>
+  <%= user.full_name %><br>
+<% end %>
+<hr>
+
 <%= link_to 'Back', root_path, class: 'links' %> || <%= link_to 'Update', edit_post_path(@post.id) %> || <%= link_to 'Destroy', post_path(@post.id), method: :delete %>

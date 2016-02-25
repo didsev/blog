@@ -14,13 +14,15 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-  if @user.save
-    redirect_to root_path
-    flash[:error] = nil
-  else
-    flash[:error] = 'Error while saving'
-    render action: 'new', object: @user
-  end
+    
+    if @user.save
+      flash[:error] = nil
+      redirect_to root_path
+    else
+      flash[:error] = 'Error while saving'
+      render action: 'new', object: @user
+    end
+  
   end
 
   def edit

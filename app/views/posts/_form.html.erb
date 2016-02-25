@@ -1,15 +1,14 @@
 <%= form_for @post do |f| %>
-<%=select_tag "users", options_from_collection_for_select(User.all, "id", "last_name")%>
-<br>
-<br>
+  <%=select_tag 'users', options_from_collection_for_select(User.all, 'id', 'last_name' ), multiple: true %>
+  <br><br>
 
   <%= f.label :title %>
   <%= f.text_field :title %>
-  <br>
-  <br>
+  <br><br>
 
   <%= f.label :text %>
   <%= f.text_area :text %>
   <br>
+
   <%= f.submit %>
 <% end %>
