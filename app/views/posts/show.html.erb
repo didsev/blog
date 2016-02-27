@@ -1,8 +1,8 @@
-Title: <%= @post.title %> <br>
+Title: <%= @post.title %> <br><br>
 Text: <%= @post.text %><br>
 
 <hr>
-  Created by: <br>
+  Created by<br>
 
 <% @post.users.each do |user| %>
   <%= user.full_name %><br>

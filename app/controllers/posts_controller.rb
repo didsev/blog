@@ -13,10 +13,21 @@ class PostsController < ApplicationController
   def edit
   end
 
-  def update
-    @post.update(post_params)
+def update
+  if @post.update(post_params)
+    PostsUser.where(post_id: @post.id).destroy_all
+  
+    params[:users].each do |user_id|
+      PostsUser.create(user: User.find(user_id.to_i), post: @post)
+    end if params[:users].present?
+
+    flash[:error] = nil
     redirect_to post_path(@post)
+  else
+    flash[:error] = 'Error while saving'
+    render action: 'edit', object: @post
   end
+end
 
   def new
     @post = Post.new

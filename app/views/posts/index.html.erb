@@ -1,4 +1,4 @@
-<h1>Hello</h1>
+<h1>List all posts</h1>
 
 <% @posts.each do |post| %>
     Title: <%= link_to post.title, post_path(post.id) %>
